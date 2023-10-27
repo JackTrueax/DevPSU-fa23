@@ -10,12 +10,12 @@
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
-// var cookieParser = require('cookie-parser');
+var cookieParser = require('cookie-parser')
 const path = require('path');
 
-var client_id = 'daecd7247b0943c1b9ced01098c0b1e0'
-var client_secret = 'c0bcfa77bf9c4506af98ae9c4d42b8ab'
-var redirect_uri = 'http://localhost:8888/callback'
+var client_id = 'a74bb96f21ee4c8294ef6772850555d4'; // Your client id
+var client_secret = '221b570cf2364d4a9e4c1243bc7ac70e';
+var redirect_uri = 'http://localhost:8888/callback';
 
 /**
  * Generates a random string containing numbers and letters
@@ -32,15 +32,17 @@ var generateRandomString = function(length) {
     return text;
   };
 
+var stateKey = 'spotify_auth_state';
 
 var app = express();
 
 app.use(express.static(path.join(__dirname, '/public')))
-//    .use(cookieParser());
+    .use(cookieParser());
 
 app.get('/login', function(req, res) {
   var state = generateRandomString(16);
   var scope = 'user-read-private user-read-email user-top-read';
+  res.cookie(stateKey, state);
 
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
@@ -52,7 +54,7 @@ app.get('/login', function(req, res) {
     }));
 });
 
-app.get('callback', function(req, res) {
+app.get('/callback', function(req, res) {
 
   // your application requests refresh and access tokens
   // after checking the state parameter
@@ -80,6 +82,7 @@ app.get('callback', function(req, res) {
       },
       json: true
     };
+
 
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
