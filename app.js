@@ -10,7 +10,11 @@
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
+<<<<<<< HEAD
 var cookieParser = require('cookie-parser')
+=======
+var cookieParser = require('cookie-parser');
+>>>>>>> cdcdb76f9cafe3f012ba62836d36242bc2821913
 const path = require('path');
 
 var client_id = 'a74bb96f21ee4c8294ef6772850555d4'; // Your client id
@@ -34,10 +38,16 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
+var stateKey = 'spotify_auth_state';
+
 var app = express();
 
 app.use(express.static(path.join(__dirname, '/public')))
+<<<<<<< HEAD
     .use(cookieParser());
+=======
+   .use(cookieParser());
+>>>>>>> cdcdb76f9cafe3f012ba62836d36242bc2821913
 
 app.get('/login', function(req, res) {
   var state = generateRandomString(16);
