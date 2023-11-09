@@ -10,15 +10,11 @@
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
-<<<<<<< HEAD
-var cookieParser = require('cookie-parser')
-=======
 var cookieParser = require('cookie-parser');
->>>>>>> cdcdb76f9cafe3f012ba62836d36242bc2821913
 const path = require('path');
 
-var client_id = 'a74bb96f21ee4c8294ef6772850555d4'; // Your client id
-var client_secret = '221b570cf2364d4a9e4c1243bc7ac70e';
+var client_id = 'daecd7247b0943c1b9ced01098c0b1e0'; // Your client id
+var client_secret = 'c0bcfa77bf9c4506af98ae9c4d42b8ab';
 var redirect_uri = 'http://localhost:8888/callback';
 
 /**
@@ -43,15 +39,11 @@ var stateKey = 'spotify_auth_state';
 var app = express();
 
 app.use(express.static(path.join(__dirname, '/public')))
-<<<<<<< HEAD
-    .use(cookieParser());
-=======
    .use(cookieParser());
->>>>>>> cdcdb76f9cafe3f012ba62836d36242bc2821913
 
 app.get('/login', function(req, res) {
   var state = generateRandomString(16);
-  var scope = 'user-read-private user-read-email user-top-read';
+  var scope = 'user-read-private user-read-email user-top-read user-read-currently-playing user-read-playback-state';
   res.cookie(stateKey, state);
 
   res.redirect('https://accounts.spotify.com/authorize?' +
